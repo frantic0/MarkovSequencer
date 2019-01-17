@@ -15,7 +15,7 @@
       <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
     </div>
     <div>
-      <!-- <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button> -->
+      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
       <!-- <button type="button" id="btn2" onclick="btn2_train()">TRAIN</button> -->
       <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
     </div>
@@ -47,8 +47,8 @@
 
 </body>
 <script src="./maxiLib.js"></script>
-<script src="https://nickersoft.github.io/markov.js/node_modules/markov.js/markov.min.js"></script>
-<!-- <script src="../markov.js/markov.js"></script> -->
+<!-- <script src="https://nickersoft.github.io/markov.js/node_modules/markov.js/markov.min.js"></script> -->
+<script src="./markov.min.js"></script>
 <script>
   /// Markov Model //////////////////////////////////
 
@@ -57,8 +57,8 @@
 
   /// Global vars (hackit!)  //////////////////////////////////
 
-  var patterns = "";
-  var sequence = "kc-kc-k-shos";
+  var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos asks";
+  var sequence = "kc kc k shos";
   // var sequence = "ksc-cccckc-k-shos";
 
   var modelOutput = "";
@@ -66,6 +66,8 @@
   /// UI handlers //////////////////////////////////
 
   function setup() {
+    document.getElementById("ta_patterns").value = patterns;
+    markov.add(patterns);
     document.getElementById("ta_sequence").value = sequence;
     document.getElementById("console").innerHTML = sequence;
   }
@@ -80,14 +82,12 @@
   function getPatternChanges() {
     patterns = document.getElementById("ta_patterns").value;
     document.getElementById("ta_patterns").innerHTML = patterns;
-    console.log(patterns);
   }
 
   function btn1_loadData() {
-    // patterns = document.getElementById("source").value;
-    // document.getElementById("console").innerHTML = sequence;
-
-
+    patterns = document.getElementById("source").value;
+    markov = new Markov();
+    markov.add(patterns);
   }
 
   function btn2_train() {
@@ -96,16 +96,15 @@
 
   function btn3_delete() {
     patterns = "";
-    document.getElementById("ta_patterns").innerHTML = patterns;
+    document.getElementById("ta_patterns").value = patterns;
+    markov = new Markov();
   }
 
   function btn4_addData() {
-
+    // patterns += sequence + "&#013;&#010;"; // to add breakline to text content of TextArea
     markov.add(sequence);
-
-    patterns += sequence + "&#013;&#010;"; // to add breakline to text content of TextArea
-    // patterns += " " + sequence;
-    document.getElementById("ta_patterns").innerHTML = patterns;
+    patterns += " " + sequence;
+    document.getElementById("ta_patterns").value = patterns;
   }
 
 
