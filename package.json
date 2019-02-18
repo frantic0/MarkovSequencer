@@ -1,0 +1,14 @@
+{
+  "name": "MarkovSequencer",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "https://github.com/frantic0/MarkovSequencer.git",
+  "author": "Francisco Bernardo <f.bernardo@sussex.ac.uk>",
+  "license": "MIT",
+  "scripts": {
+    "test": "live-server --port=9000 --mount=/:public"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}

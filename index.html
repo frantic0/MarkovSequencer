@@ -77,6 +77,9 @@
   function getSeqChanges() {
     sequence = document.getElementById("ta_sequence").value;
     document.getElementById("console").innerHTML = sequence;
+    console.log(sequence);
+
+
   }
 
   function getPatternChanges() {
@@ -124,6 +127,11 @@
   var snare = new maximJs.maxiSample();
   var closedHat = new maximJs.maxiSample();
   var openHat = new maximJs.maxiSample();
+
+  var mySine = new maximJs.maxiOsc();
+  var myOtherSine = new maximJs.maxiOsc();
+  var myLastSine = new maximJs.maxiOsc();
+
   var oldClock = 0;
   var phase = 0;
   maxiAudio.init();
@@ -135,41 +143,88 @@
   maxiAudio.loadSample("909open.wav", openHat);
 
 
-  maxiAudio.play = function () {
-    var now = clock.sinewave(7);
-    if (oldClock <= 0 && now > 0) {
-      var sampleSelector = sequence[phase++ % sequence.length];
-      switch (sampleSelector) {
-        case "k":
-          kick.trigger();
-          break;
-        case "s":
-          snare.trigger();
-          break;
-        case "o":
-          openHat.trigger();
-          break;
-        case "c":
-          closedHat.trigger();
-          break;
+  function loopPlayer(){
+
+
+  }
+
+  function synComposer(n) {
+
+
+  }
+
+
+  function synSelector(n) {
+
+    var sinOut;
+
+    switch (n) {
+      case 0:
+        sinOut = mySine.sinewave(myOtherSine.sinewave(0.1) * 440);
+        break;
+      case 1:
+        sinOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
+        break;
+      case 2:
+        sinOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+        break;
+      default:
+        sinOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+    }
+    return sinOut;
+  }
+
+  function mixer(){
+
+
+  }
+
+  function play() {
+    maxiAudio.play = function() {
+
+      var now = clock.sinewave(7);
+
+      if (oldClock <= 0 && now > 0) {
+
+        var sampleSelector = sequence[phase++ % sequence.length];
+
+        switch (sampleSelector) {
+          case "k":
+            kick.trigger();
+            break;
+          case "s":
+            snare.trigger();
+            break;
+          case "o":
+            openHat.trigger();
+            break;
+          case "c":
+            closedHat.trigger();
+            break;
+        }
       }
-    }
-    oldClock = now;
-    var w = 0.0;
-    if (kick.isReady()) {
-      w += kick.playOnce();
-    }
-    if (snare.isReady()) {
-      w += snare.playOnce();
-    }
-    if (closedHat.isReady()) {
-      w += closedHat.playOnce();
-    }
-    if (openHat.isReady()) {
-      w += openHat.playOnce();
-    }
-    this.output = w;
+
+      oldClock = now;
+
+      var w = 0.0;
+
+      if (kick.isReady()) {
+        w += kick.playOnce();
+      }
+      if (snare.isReady()) {
+        w += snare.playOnce();
+      }
+      if (closedHat.isReady()) {
+        w += closedHat.playOnce();
+      }
+      if (openHat.isReady()) {
+        w += openHat.playOnce();
+      }
+      this.output = w + synSelector(parseInt(sequence));
+    };
+
   };
+  play();
 </script>
 
 </html>
