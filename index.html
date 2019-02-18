@@ -116,13 +116,12 @@
     document.getElementById("console").innerHTML = sequence;
   }
 
-
-
-
   /// Maxi Audio Engine  //////////////////////////////////
 
   var maxiAudio = new maximJs.maxiAudio();
+
   var clock = new maximJs.maxiOsc();
+
   var kick = new maximJs.maxiSample();
   var snare = new maximJs.maxiSample();
   var closedHat = new maximJs.maxiSample();
@@ -134,22 +133,77 @@
 
   var oldClock = 0;
   var phase = 0;
+
   maxiAudio.init();
 
   // 	var sample = new maximJs.maxiSample();
-  maxiAudio.loadSample("909b.wav", kick);
-  maxiAudio.loadSample("909.wav", snare);
-  maxiAudio.loadSample("909closed.wav", closedHat);
-  maxiAudio.loadSample("909open.wav", openHat);
+  maxiAudio.loadSample("./samples/909b.wav", kick);
+  maxiAudio.loadSample("./samples/909.wav", snare);
+  maxiAudio.loadSample("./samples/909closed.wav", closedHat);
+  maxiAudio.loadSample("./samples/909open.wav", openHat);
 
 
   function loopPlayer(){
 
+    // // Web Audio Equivalent
+    // var audioContext = new AudioContext();
+    // var futureTickTime = audioContext.currentTime;
+    // function scheduler() {
+    //   if (futureTickTime < audioContext.currentTime + 0.1) {
+    //     futureTickTime += 0.5; //____can be any time value. 0.5 happens to be a quarter note at 120 bpm
+    //     console.log(futureTickTime);
+    // }
+    //   window.setTimeout(scheduler, 0);
+    // }
+    // scheduler();
 
+    var now = clock.sinewave(7);
+
+    // DEBUG:
+    // console.log("phase:" + phase);
+    // console.log("now:" + now);
+    // console.log("oldClock:" + oldClock);
+
+    if (oldClock <= 0 && now > 0) {
+
+      var sampleSelector = sequence[phase++ % sequence.length];
+
+      switch (sampleSelector) {
+        case "k":
+          kick.trigger();
+          break;
+        case "s":
+          snare.trigger();
+          break;
+        case "o":
+          openHat.trigger();
+          break;
+        case "c":
+          closedHat.trigger();
+          break;
+      }
+    }
+
+    oldClock = now;
+
+    var w = 0.0;
+
+    if (kick.isReady()) {
+      w += kick.playOnce();
+    }
+    if (snare.isReady()) {
+      w += snare.playOnce();
+    }
+    if (closedHat.isReady()) {
+      w += closedHat.playOnce();
+    }
+    if (openHat.isReady()) {
+      w += openHat.playOnce();
+    }
+    return w;
   }
 
   function synComposer(n) {
-
 
   }
 
@@ -175,56 +229,63 @@
   }
 
   function mixer(){
-
-
+    return loopPlayer() + synSelector(parseInt(sequence));
   }
 
   function play() {
     maxiAudio.play = function() {
-
-      var now = clock.sinewave(7);
-
-      if (oldClock <= 0 && now > 0) {
-
-        var sampleSelector = sequence[phase++ % sequence.length];
-
-        switch (sampleSelector) {
-          case "k":
-            kick.trigger();
-            break;
-          case "s":
-            snare.trigger();
-            break;
-          case "o":
-            openHat.trigger();
-            break;
-          case "c":
-            closedHat.trigger();
-            break;
-        }
-      }
-
-      oldClock = now;
-
-      var w = 0.0;
-
-      if (kick.isReady()) {
-        w += kick.playOnce();
-      }
-      if (snare.isReady()) {
-        w += snare.playOnce();
-      }
-      if (closedHat.isReady()) {
-        w += closedHat.playOnce();
-      }
-      if (openHat.isReady()) {
-        w += openHat.playOnce();
-      }
-      this.output = w + synSelector(parseInt(sequence));
+      this.output = mixer();
     };
-
   };
+
   play();
+
+  // function play() {
+  //   maxiAudio.play = function() {
+  //
+  //     var now = clock.sinewave(7);
+  //
+  //     if (oldClock <= 0 && now > 0) {
+  //
+  //       var sampleSelector = sequence[phase++ % sequence.length];
+  //
+  //       switch (sampleSelector) {
+  //         case "k":
+  //           kick.trigger();
+  //           break;
+  //         case "s":
+  //           snare.trigger();
+  //           break;
+  //         case "o":
+  //           openHat.trigger();
+  //           break;
+  //         case "c":
+  //           closedHat.trigger();
+  //           break;
+  //       }
+  //     }
+  //
+  //     oldClock = now;
+  //
+  //     var w = 0.0;
+  //
+  //     if (kick.isReady()) {
+  //       w += kick.playOnce();
+  //     }
+  //     if (snare.isReady()) {
+  //       w += snare.playOnce();
+  //     }
+  //     if (closedHat.isReady()) {
+  //       w += closedHat.playOnce();
+  //     }
+  //     if (openHat.isReady()) {
+  //       w += openHat.playOnce();
+  //     }
+  //     this.output = w + synSelector(parseInt(sequence));
+  //   };
+  //
+  // };
+
 </script>
 
 </html>
