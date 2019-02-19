@@ -118,8 +118,13 @@
 
   /// Maxi Audio Engine  //////////////////////////////////
 
+
+
   var maxiAudio = new maximJs.maxiAudio();
 
+  var tempo = 120.0; // tempo (in beats per minute);
+  var secondsPerBeat = (60.0 / tempo);
+  var counterTimeValue = (secondsPerBeat / 4); //___16th note
   var clock = new maximJs.maxiOsc();
 
   var kick = new maximJs.maxiSample();
@@ -143,7 +148,7 @@
   maxiAudio.loadSample("./samples/909open.wav", openHat);
 
 
-  function loopPlayer(){
+  function loopPlayer() {
 
     // // Web Audio Equivalent
     // var audioContext = new AudioContext();
@@ -158,11 +163,6 @@
     // scheduler();
 
     var now = clock.sinewave(7);
-
-    // DEBUG:
-    // console.log("phase:" + phase);
-    // console.log("now:" + now);
-    // console.log("oldClock:" + oldClock);
 
     if (oldClock <= 0 && now > 0) {
 
@@ -205,87 +205,59 @@
 
   function synComposer(n) {
 
+    var synOut;
+
+    return synOut;
   }
 
 
   function synSelector(n) {
 
-    var sinOut;
+    var synOut;
 
     switch (n) {
       case 0:
-        sinOut = mySine.sinewave(myOtherSine.sinewave(0.1) * 440);
+        // Hello world
+        synOut = mySine.sinewave(440);
         break;
       case 1:
-        sinOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
+        // Beating
+        synOut = mySine.sinewave(440) + myOtherSine.sinewave(441);
         break;
       case 2:
-        sinOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+        // Amplitude Modulation
+        synOut = mySine.sinewave(440) * myOtherSine.sinewave(1);
+        break;
+      case 3:
+        // Frequency Modulation
+        synOut = mySine.sinewave(440+(myOtherSine.sinewave(1)*100));
+        break;
+      case 4:
+        synOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
+        break;
+        break;
+      case 5:
+        synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
         break;
       default:
-        sinOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+        synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
     }
-    return sinOut;
+    return synOut;
   }
 
-  function mixer(){
+  function mixer() {
     return loopPlayer() + synSelector(parseInt(sequence));
   }
 
   function play() {
+
     maxiAudio.play = function() {
+
       this.output = mixer();
     };
   };
 
   play();
-
-  // function play() {
-  //   maxiAudio.play = function() {
-  //
-  //     var now = clock.sinewave(7);
-  //
-  //     if (oldClock <= 0 && now > 0) {
-  //
-  //       var sampleSelector = sequence[phase++ % sequence.length];
-  //
-  //       switch (sampleSelector) {
-  //         case "k":
-  //           kick.trigger();
-  //           break;
-  //         case "s":
-  //           snare.trigger();
-  //           break;
-  //         case "o":
-  //           openHat.trigger();
-  //           break;
-  //         case "c":
-  //           closedHat.trigger();
-  //           break;
-  //       }
-  //     }
-  //
-  //     oldClock = now;
-  //
-  //     var w = 0.0;
-  //
-  //     if (kick.isReady()) {
-  //       w += kick.playOnce();
-  //     }
-  //     if (snare.isReady()) {
-  //       w += snare.playOnce();
-  //     }
-  //     if (closedHat.isReady()) {
-  //       w += closedHat.playOnce();
-  //     }
-  //     if (openHat.isReady()) {
-  //       w += openHat.playOnce();
-  //     }
-  //     this.output = w + synSelector(parseInt(sequence));
-  //   };
-  //
-  // };
-
 </script>
 
 </html>
