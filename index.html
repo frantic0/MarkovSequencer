@@ -59,6 +59,7 @@
 
   var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos asks";
   var sequence = "kc kc k shos";
+  var synth = 0;
   // var sequence = "ksc-cccckc-k-shos";
 
   var modelOutput = "";
@@ -77,9 +78,12 @@
   function getSeqChanges() {
     sequence = document.getElementById("ta_sequence").value;
     document.getElementById("console").innerHTML = sequence;
-    console.log(sequence);
+    // console.log(sequence);
 
+    if(!isNaN(parseInt(sequence)))
+      synth = parseInt(sequence)
 
+    console.log(synth);
   }
 
   function getPatternChanges() {
@@ -239,14 +243,14 @@
       case 5:
         synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
         break;
-      default:
-        synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+      // default:
+      //   synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
     }
     return synOut;
   }
 
   function mixer() {
-    return loopPlayer() + synSelector(parseInt(sequence));
+    return loopPlayer() + synSelector(synth);
   }
 
   function play() {
