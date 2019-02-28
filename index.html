@@ -239,7 +239,6 @@
       case 4:
         synOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
         break;
-        break;
       case 5:
         synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
         break;
@@ -253,15 +252,15 @@
     return loopPlayer() + synSelector(synth);
   }
 
-  function play() {
+  function play(f) {
 
     maxiAudio.play = function() {
-
-      this.output = mixer();
+      this.output = f();
     };
   };
 
-  play();
+  play(mixer);
+
 </script>
 
 </html>
