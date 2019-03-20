@@ -26,6 +26,8 @@
     <button type="button" id="btn4" onclick="btn4_addData()">ADD DATA</button>
     <button type="button" id="btn5" onclick="btn5_generate()">GENERATE</button>
 
+
+    <button type="button" id="btn6" style="float: left; " onclick="btn6_play()">PLAY</button>
     <p></p>
     &nbsp;
     &nbsp;
@@ -40,15 +42,39 @@
         <div style="float: left;" id="gen_console"> </div>
       </div>
     </div>
+
+
+    <p></p>
+    &nbsp;
+    &nbsp;
+    <div>
+      <div style="clear:left;">
+        <div style="float: left; margin-right: 10px">k = kick drum</div>
+      </div>
+
+      <div style="clear:left;">
+        <div style="float: left; margin-right: 10px">s = snare drum</div>
+      </div>
+
+      <div style="clear:left;">
+        <div style="float: left; margin-right: 10px">c = closed hi-hat</div>
+      </div>
+
+      <div style="clear:left;">
+        <div style="float: left; margin-right: 10px">o = open hi-hat</div>
+      </div>
+
+    </div>
   </div>
 
   <!--<div id="console"></div>-->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script> -->
 
 </body>
 <script src="./maxiLib.js"></script>
 <!-- <script src="https://nickersoft.github.io/markov.js/node_modules/markov.js/markov.min.js"></script> -->
-<script src="./markov.min.js"></script>
+<!-- <script src="./markov.min.js"></script> -->
+<script src="./markov.js"></script>
 <script>
   /// Markov Model //////////////////////////////////
 
@@ -114,15 +140,31 @@
     document.getElementById("ta_patterns").value = patterns;
   }
 
-
   function btn5_generate() {
     sequence = markov.generate();
     document.getElementById("console").innerHTML = sequence;
   }
 
+  let isPlaying = false;
+
+  function btn6_play(){
+
+    if(!initialised)
+      init();
+
+    if(!isPlaying) {
+      play(mixer);
+      isPlaying = true;
+    }
+    else {
+      play( () => { return 0; } );
+      isPlaying = false;
+    }
+    (() => isPlaying ? document.getElementById("btn6").innerText = "STOP": document.getElementById("btn6").innerText= "PLAY")();
+  }
+
+
   /// Maxi Audio Engine  //////////////////////////////////
-
-
 
   var maxiAudio = new maximJs.maxiAudio();
 
@@ -143,28 +185,23 @@
   var oldClock = 0;
   var phase = 0;
 
-  maxiAudio.init();
+  let initialised = false;
 
-  // 	var sample = new maximJs.maxiSample();
-  maxiAudio.loadSample("./samples/909b.wav", kick);
-  maxiAudio.loadSample("./samples/909.wav", snare);
-  maxiAudio.loadSample("./samples/909closed.wav", closedHat);
-  maxiAudio.loadSample("./samples/909open.wav", openHat);
+  function init(){
+
+    maxiAudio.init();
+
+    // 	var sample = new maximJs.maxiSample();
+    maxiAudio.loadSample("./samples/909b.wav", kick);
+    maxiAudio.loadSample("./samples/909.wav", snare);
+    maxiAudio.loadSample("./samples/909closed.wav", closedHat);
+    maxiAudio.loadSample("./samples/909open.wav", openHat);
+
+    initialised = true;
+  }
 
 
   function loopPlayer() {
-
-    // // Web Audio Equivalent
-    // var audioContext = new AudioContext();
-    // var futureTickTime = audioContext.currentTime;
-    // function scheduler() {
-    //   if (futureTickTime < audioContext.currentTime + 0.1) {
-    //     futureTickTime += 0.5; //____can be any time value. 0.5 happens to be a quarter note at 120 bpm
-    //     console.log(futureTickTime);
-    // }
-    //   window.setTimeout(scheduler, 0);
-    // }
-    // scheduler();
 
     var now = clock.sinewave(7);
 
@@ -234,7 +271,7 @@
         break;
       case 3:
         // Frequency Modulation
-        synOut = mySine.sinewave(440+(myOtherSine.sinewave(1)*100));
+        synOut = mySine.sinewave(440 + (myOtherSine.sinewave(1)*100));
         break;
       case 4:
         synOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
