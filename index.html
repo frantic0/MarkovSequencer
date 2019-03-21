@@ -81,12 +81,12 @@
         <div style="float: left; color: #CCCCCC" id="console-ln-1"></div>
       </div>
       <div style="clear:left;">
-        <div style="float: left; margin-right: 10px; color: #999999;">&gt; </div>
-        <div style="float: left; color: #999999;" id="console-ln-2"> </div>
+        <div style="float: left; margin-right: 10px; color: #888888;">&gt; </div>
+        <div style="float: left; color: #888888;" id="console-ln-2"> </div>
       </div>
       <div style="clear:left;">
-        <div style="float: left; margin-right: 10px; color: #888888;">&gt; </div>
-        <div style="float: left; color: #888888" id="console-ln-3"> </div>
+        <div style="float: left; margin-right: 10px; color: #555555;">&gt; </div>
+        <div style="float: left; color: #555555" id="console-ln-3"> </div>
       </div>
     </div>
     <p></p>
@@ -153,9 +153,10 @@
   }
 
   function btn1_loadData() {
-    patterns = document.getElementById("source").value;
-    markov = new Markov();
+    // patterns = document.getElementById("source").value;
+    // markov = new Markov();
     markov.add(patterns);
+    console.log('loadData: ' + patterns);
   }
 
   function btn2_train() {
@@ -171,13 +172,15 @@
 
   function btn4_addData() {
     // patterns += sequence + "&#013;&#010;"; // to add breakline to text content of TextArea
-    markov.add(sequence);
+    // markov.add(sequence);
     patterns += " " + sequence;
     document.getElementById("ta_patterns").value = patterns;
   }
 
   function btn5_generate() {
+    console.log('generate');
     sequence = markov.generate();
+    console.log('generated');
     updateConsole("generated > " + sequence);
   }
 
@@ -208,9 +211,7 @@
   function updateConsole(text){
 
     document.getElementById("console-ln-3").innerHTML = (' ' + console_ln_2).slice(1);
-
     document.getElementById("console-ln-2").innerHTML = (' ' + console_ln_1).slice(1);
-
 
     isPlaying? console_ln_1 = text : console_ln_1 = 'stopped';
     document.getElementById("console-ln-1").innerHTML = console_ln_1;
