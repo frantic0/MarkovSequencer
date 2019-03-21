@@ -15,7 +15,7 @@
 
 
     <div>
-      <p>Markov explanation</p>
+      <h3>Markov explanation</h3>
     </div>
 
     <div>
@@ -54,16 +54,16 @@
 
     &nbsp;
     <div>
-      <p>Markov Generator</p>
+      <h3>Markov Generator</h3>
       <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
     </div>
     <div>
       <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
-      <!-- <button type="button" id="btn2" onclick="btn2_train()">TRAIN</button> -->
       <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
+      <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
     </div>
     <div>
-      <p>Drum Sequence</p>
+      <h3>Drum Sequence</h3>
       <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
     </div>
 
@@ -77,17 +77,18 @@
     &nbsp;
     <div>
       <div>
-        <div style="float: left; margin-right: 10px">playing &gt; </div>
-        <div style="float: left;" id="console"> </div>
+        <div style="float: left; margin-right: 10px; color: #CCCCCC">&gt; </div>
+        <div style="float: left; color: #CCCCCC" id="console-ln-1"></div>
       </div>
-
       <div style="clear:left;">
-        <div style="float: left; margin-right: 10px">gen &gt; </div>
-        <div style="float: left;" id="gen_console"> </div>
+        <div style="float: left; margin-right: 10px; color: #999999;">&gt; </div>
+        <div style="float: left; color: #999999;" id="console-ln-2"> </div>
+      </div>
+      <div style="clear:left;">
+        <div style="float: left; margin-right: 10px; color: #888888;">&gt; </div>
+        <div style="float: left; color: #888888" id="console-ln-3"> </div>
       </div>
     </div>
-
-
     <p></p>
     &nbsp;
     &nbsp;
@@ -118,26 +119,32 @@
 
   var modelOutput = "";
 
+  let console_ln_1 = '', console_ln_2 = '', console_ln_3 = '';
+
   /// UI handlers //////////////////////////////////
+
+
 
   (function setup() {
     document.getElementById("ta_patterns").value = patterns;
     markov.add(patterns);
     document.getElementById("ta_sequence").value = sequence;
-    document.getElementById("console").innerHTML = sequence;
+    // updateConsole(sequence);
   })();
   // setup();
 
   /* Grab text sequence */
   function getSeqChanges() {
     sequence = document.getElementById("ta_sequence").value;
-    document.getElementById("console").innerHTML = sequence;
+    // document.getElementById("console").innerHTML = sequence;
     // console.log(sequence);
+    // updateConsole(sequence);
 
     if(!isNaN(parseInt(sequence)))
       synth = parseInt(sequence)
 
-    console.log(synth);
+    updateConsole(sequence);
+
   }
 
   function getPatternChanges() {
@@ -153,6 +160,7 @@
 
   function btn2_train() {
     console.log(patterns);
+    updateConsole(patterns);
   }
 
   function btn3_delete() {
@@ -170,7 +178,7 @@
 
   function btn5_generate() {
     sequence = markov.generate();
-    document.getElementById("console").innerHTML = sequence;
+    updateConsole("generated > " + sequence);
   }
 
   function playSample(e) {
@@ -190,10 +198,24 @@
     isPlaying = !isPlaying;
 
     let btn6 = document.getElementById("btn6");
-    let playing = () => { btn6.innerText = "■"; btn6.style.backgroundColor = "red";}
-    let stopped = () => { btn6.innerText = "▶"; btn6.style.backgroundColor = "#4CAF50";}
-
+    let playing = () => { btn6.innerText = "■"; btn6.style.backgroundColor = "red"; }
+    let stopped = () => { btn6.innerText = "▶"; btn6.style.backgroundColor = "#4CAF50"; }
     (() => isPlaying ? playing() : stopped() )();
+
+    updateConsole(sequence);
+  }
+
+  function updateConsole(text){
+
+    document.getElementById("console-ln-3").innerHTML = (' ' + console_ln_2).slice(1);
+
+    document.getElementById("console-ln-2").innerHTML = (' ' + console_ln_1).slice(1);
+
+
+    isPlaying? console_ln_1 = text : console_ln_1 = 'stopped';
+    document.getElementById("console-ln-1").innerHTML = console_ln_1;
+    console_ln_1 = document.getElementById("console-ln-1").innerHTML.toString();
+    console_ln_2 = document.getElementById("console-ln-2").innerHTML.toString();
   }
 
 
@@ -290,30 +312,35 @@
     var synOut;
 
     switch (n) {
+
       case 0:
+        // Silent synth
+        synOut = 0;
+        break;
+      case 1:
         // Hello world
         synOut = mySine.sinewave(440);
         break;
-      case 1:
+      case 2:
         // Beating
         synOut = mySine.sinewave(440) + myOtherSine.sinewave(441);
         break;
-      case 2:
+      case 3:
         // Amplitude Modulation
         synOut = mySine.sinewave(440) * myOtherSine.sinewave(1);
         break;
-      case 3:
+      case 4:
         // Frequency Modulation
         synOut = mySine.sinewave(440 + (myOtherSine.sinewave(1)*100));
         break;
-      case 4:
+      case 5:
         synOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
         break;
-      case 5:
+      case 6:
         synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
         break;
-      // default:
-      //   synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+      default:
+       synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
     }
     return synOut;
   }

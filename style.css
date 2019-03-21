@@ -11,6 +11,13 @@ p {
   color: white;
 }
 
+textarea {
+  margin-top: -10px;
+
+}
+
+
+
 .sampleButtons {
   float: left;
   width:22px;
