@@ -3,13 +3,56 @@
 
 <head>
   <meta charset="utf-8">
+  <link href="style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
   <div style="margin: 30px 30px 30px 30px;">
-    <h1>Markov Sequencer</h1>
-    <!-- <p>Markov &gt; Files</p> -->
 
+    <div>
+      <h1>Markov Sequencer</h1>
+    <div><!-- <p>Markov &gt; Files</p> -->
+
+
+    <div>
+      <p>Markov explanation</p>
+    </div>
+
+    <div>
+      <div style="clear:left;">
+        <audio id="909b">
+          <source src="./samples/909b.wav" type="audio/wav">
+        </audio>
+        <button id="909b" class="sampleButtons" onclick="playSample(this)">▶</button>
+        <div style="float: left; margin-right: 10px">k = kick drum</div>
+      </div>
+
+      <div style="clear:left;">
+        <audio id="909">
+            <source src="./samples/909.wav" type="audio/wav">
+        </audio>
+        <button id="909" class="sampleButtons" onclick="playSample(this)">▶</button>
+        <div style="float: left; margin-right: 10px">s = snare drum</div>
+      </div>
+
+      <div style="clear:left;">
+        <audio id="909open">
+          <source src="./samples/909open.wav" type="audio/wav">
+        </audio>
+        <button id="909open" class="sampleButtons" onclick="playSample(this)">▶</button>
+        <div style="float: left; margin-right: 10px">c = closed hi-hat</div>
+      </div>
+
+      <div style="clear:left;">
+        <audio id="909closed">
+          <source src="./samples/909closed.wav" type="audio/wav">
+        </audio>
+        <button id="909closed" class="sampleButtons"  onclick="playSample(this)">▶</button>
+        <div style="float: left; margin-right: 10px">o = open hi-hat</div>
+      </div>
+    </div>
+
+    &nbsp;
     <div>
       <p>Markov Generator</p>
       <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
@@ -20,14 +63,15 @@
       <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
     </div>
     <div>
-      <p>Sequence</p>
+      <p>Drum Sequence</p>
       <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
     </div>
-    <button type="button" id="btn4" onclick="btn4_addData()">ADD DATA</button>
-    <button type="button" id="btn5" onclick="btn5_generate()">GENERATE</button>
 
-
-    <button type="button" id="btn6" style="float: left; " onclick="btn6_play()">PLAY</button>
+    <div>
+      <button type="button" id="btn6" style="float: left; margin-right: 5px; color: white; background-color: #4CAF50;" onclick="btn6_play()">▶</button>
+      <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
+      <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
+    </div>
     <p></p>
     &nbsp;
     &nbsp;
@@ -47,24 +91,7 @@
     <p></p>
     &nbsp;
     &nbsp;
-    <div>
-      <div style="clear:left;">
-        <div style="float: left; margin-right: 10px">k = kick drum</div>
-      </div>
 
-      <div style="clear:left;">
-        <div style="float: left; margin-right: 10px">s = snare drum</div>
-      </div>
-
-      <div style="clear:left;">
-        <div style="float: left; margin-right: 10px">c = closed hi-hat</div>
-      </div>
-
-      <div style="clear:left;">
-        <div style="float: left; margin-right: 10px">o = open hi-hat</div>
-      </div>
-
-    </div>
   </div>
 
   <!--<div id="console"></div>-->
@@ -80,10 +107,11 @@
 
   var markov = new Markov();
 
+  let isPlaying = false;
 
   /// Global vars (hackit!)  //////////////////////////////////
 
-  var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos asks";
+  var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos";
   var sequence = "kc kc k shos";
   var synth = 0;
   // var sequence = "ksc-cccckc-k-shos";
@@ -92,13 +120,13 @@
 
   /// UI handlers //////////////////////////////////
 
-  function setup() {
+  (function setup() {
     document.getElementById("ta_patterns").value = patterns;
     markov.add(patterns);
     document.getElementById("ta_sequence").value = sequence;
     document.getElementById("console").innerHTML = sequence;
-  }
-  setup();
+  })();
+  // setup();
 
   /* Grab text sequence */
   function getSeqChanges() {
@@ -145,22 +173,27 @@
     document.getElementById("console").innerHTML = sequence;
   }
 
-  let isPlaying = false;
+  function playSample(e) {
+    let x = document.getElementById(e.id);
+    // alert(e.id);
+    x.play();
+  }
+
 
   function btn6_play(){
 
-    if(!initialised)
-      init();
+    if(!initialised) init();
 
-    if(!isPlaying) {
-      play(mixer);
-      isPlaying = true;
-    }
-    else {
-      play( () => { return 0; } );
-      isPlaying = false;
-    }
-    (() => isPlaying ? document.getElementById("btn6").innerText = "STOP": document.getElementById("btn6").innerText= "PLAY")();
+    if(!isPlaying) play(mixer);
+    else play( () => { return 0; } ); // Shut up Maxi by injecting 0 in output
+
+    isPlaying = !isPlaying;
+
+    let btn6 = document.getElementById("btn6");
+    let playing = () => { btn6.innerText = "■"; btn6.style.backgroundColor = "red";}
+    let stopped = () => { btn6.innerText = "▶"; btn6.style.backgroundColor = "#4CAF50";}
+
+    (() => isPlaying ? playing() : stopped() )();
   }
 
 

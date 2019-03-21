@@ -1,0 +1,18 @@
+body {
+  background-color: rgb(50, 50, 50);
+  color: white;
+}
+
+h1 {
+
+}
+
+p {
+  color: white;
+}
+
+.sampleButtons {
+  float: left;
+  width:22px;
+  margin: 0 5px 2px 0;
+}
