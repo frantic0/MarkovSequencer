@@ -297,7 +297,7 @@
     if (openHat.isReady()) {
       w += openHat.playOnce();
     }
-    return w;
+    return w * 0.5;
   }
 
   function synComposer(n) {
@@ -347,7 +347,7 @@
   }
 
   function mixer() {
-    return loopPlayer() + synSelector(synth);
+    return loopPlayer() + synSelector(synth) * 0.2 ;
   }
 
   function play(f) {
