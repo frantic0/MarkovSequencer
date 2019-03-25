@@ -4,8 +4,13 @@ body {
 }
 
 h1 {
-
+  float: left;
+  margin: 0px 0px;
 }
+
+/* h3 {
+  margin: 15px;
+} */
 
 p {
   color: white;
@@ -16,10 +21,41 @@ textarea {
 
 }
 
+.console {
+  float: left;
+  margin-right: 10px;
+  font-size: 14px;
+}
 
+a {
+  color: hotpink;
+}
 
 .sampleButtons {
   float: left;
   width:22px;
   margin: 0 5px 2px 0;
 }
+
+.sampleText {
+  float: left;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+
+
+/* button {
+  background-color: transparent;
+  color:white;
+  border:solid white 5px;
+  width:120px;
+  padding:10px;
+  margin:10px;
+}
+
+button:hover {
+  background-color: transparent;
+  color:#FFD12C;
+  border:solid #FFD12C 5px;
+} */

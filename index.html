@@ -3,16 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <link href="style.css" type="text/css" rel="stylesheet">
+  <link href="style.css" type="text/css" rel="stylesheet"/>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Staatliches' rel='stylesheet' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
 </head>
 
 <body>
-  <div style="margin: 30px 30px 30px 30px;">
+  <div style="margin: 20px 20px 20px 20px;">
 
-    <div>
+    <div style="display: inline-block">
       <h1>Markov Sequencer</h1>
-    <div><!-- <p>Markov &gt; Files</p> -->
-
+      <h4>by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
+    </div>
 
     <div>
       <h3>Markov explanation</h3>
@@ -21,47 +23,42 @@
     <div>
       <div style="clear:left;">
         <audio id="909b">
+          <!-- TODO: Change this path when porting to MIMIC -->
           <source src="./samples/909b.wav" type="audio/wav">
         </audio>
         <button id="909b" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div style="float: left; margin-right: 10px">k = kick drum</div>
+        <div class="sampleText">k = kick drum</div>
       </div>
 
       <div style="clear:left;">
         <audio id="909">
+            <!-- TODO: Change this path when porting to MIMIC -->
             <source src="./samples/909.wav" type="audio/wav">
         </audio>
         <button id="909" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div style="float: left; margin-right: 10px">s = snare drum</div>
+        <div class="sampleText">s = snare drum</div>
       </div>
 
       <div style="clear:left;">
         <audio id="909open">
+          <!-- TODO: Change this path when porting to MIMIC -->
           <source src="./samples/909open.wav" type="audio/wav">
         </audio>
         <button id="909open" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div style="float: left; margin-right: 10px">c = closed hi-hat</div>
+        <div class="sampleText">c = closed hi-hat</div>
       </div>
 
       <div style="clear:left;">
         <audio id="909closed">
+          <!-- TODO: Change this path when porting to MIMIC -->
           <source src="./samples/909closed.wav" type="audio/wav">
         </audio>
         <button id="909closed" class="sampleButtons"  onclick="playSample(this)">▶</button>
-        <div style="float: left; margin-right: 10px">o = open hi-hat</div>
+        <div class="sampleText">o = open hi-hat</div>
       </div>
     </div>
-
     &nbsp;
-    <div>
-      <h3>Markov Generator</h3>
-      <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
-    </div>
-    <div>
-      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
-      <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
-      <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
-    </div>
+
     <div>
       <h3>Drum Sequence</h3>
       <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
@@ -72,26 +69,37 @@
       <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
       <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
     </div>
-    <p></p>
     &nbsp;
     &nbsp;
+
+    <div>
+      <h3>Markov Generator</h3>
+      <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
+    </div>
+    <div>
+      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
+      <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
+      <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
+    </div>
+    &nbsp;
+    &nbsp;
+
     <div>
       <div>
-        <div style="float: left; margin-right: 10px; color: #CCCCCC">&gt; </div>
-        <div style="float: left; color: #CCCCCC" id="console-ln-1"></div>
+        <div class="console" style="color: #CCCCCC;">&gt; </div>
+        <div class="console" style="color: #CCCCCC;" id="console-ln-1"></div>
       </div>
       <div style="clear:left;">
-        <div style="float: left; margin-right: 10px; color: #888888;">&gt; </div>
-        <div style="float: left; color: #888888;" id="console-ln-2"> </div>
+        <div class="console" style="color: #888888;">&gt; </div>
+        <div class="console" style="color: #888888;" id="console-ln-2"> </div>
       </div>
       <div style="clear:left;">
-        <div style="float: left; margin-right: 10px; color: #555555;">&gt; </div>
-        <div style="float: left; color: #555555" id="console-ln-3"> </div>
+        <div class="console" style="color: #555555;">&gt; </div>
+        <div class="console" style="color: #555555;" id="console-ln-3"> </div>
       </div>
     </div>
     <p></p>
-    &nbsp;
-    &nbsp;
+
 
   </div>
 
@@ -99,9 +107,9 @@
   <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script> -->
 
 </body>
+<!-- TODO: Change this path when porting to MIMIC -->
 <script src="./maxiLib.js"></script>
-<!-- <script src="https://nickersoft.github.io/markov.js/node_modules/markov.js/markov.min.js"></script> -->
-<!-- <script src="./markov.min.js"></script> -->
+<!-- TODO: Change this path when porting to MIMIC -->
 <script src="./markov.js"></script>
 <script>
   /// Markov Model //////////////////////////////////
@@ -181,7 +189,7 @@
     console.log('generate');
     sequence = markov.generate();
     console.log('generated');
-    updateConsole("generated > " + sequence);
+    updateConsole("generated: " + sequence);
   }
 
   function playSample(e) {
@@ -205,15 +213,18 @@
     let stopped = () => { btn6.innerText = "▶"; btn6.style.backgroundColor = "#4CAF50"; }
     (() => isPlaying ? playing() : stopped() )();
 
-    updateConsole(sequence);
+    let consoleOut;
+    isPlaying ? consoleOut = 'playing: ' + sequence : consoleOut = 'stopped';
+    updateConsole(consoleOut);
   }
+
 
   function updateConsole(text){
 
     document.getElementById("console-ln-3").innerHTML = (' ' + console_ln_2).slice(1);
     document.getElementById("console-ln-2").innerHTML = (' ' + console_ln_1).slice(1);
 
-    isPlaying? console_ln_1 = text : console_ln_1 = 'stopped';
+    console_ln_1 = text;
     document.getElementById("console-ln-1").innerHTML = console_ln_1;
     console_ln_1 = document.getElementById("console-ln-1").innerHTML.toString();
     console_ln_2 = document.getElementById("console-ln-2").innerHTML.toString();
@@ -247,6 +258,8 @@
 
     maxiAudio.init();
 
+
+    //TODO: Change this path when porting to MIMIC
     // 	var sample = new maximJs.maxiSample();
     maxiAudio.loadSample("./samples/909b.wav", kick);
     maxiAudio.loadSample("./samples/909.wav", snare);
