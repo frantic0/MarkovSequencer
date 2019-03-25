@@ -29,7 +29,6 @@
         <button id="909b" class="sampleButtons" onclick="playSample(this)">▶</button>
         <div class="sampleText">k = kick drum</div>
       </div>
-
       <div style="clear:left;">
         <audio id="909">
             <!-- TODO: Change this path when porting to MIMIC -->
@@ -38,7 +37,6 @@
         <button id="909" class="sampleButtons" onclick="playSample(this)">▶</button>
         <div class="sampleText">s = snare drum</div>
       </div>
-
       <div style="clear:left;">
         <audio id="909open">
           <!-- TODO: Change this path when porting to MIMIC -->
@@ -47,7 +45,6 @@
         <button id="909open" class="sampleButtons" onclick="playSample(this)">▶</button>
         <div class="sampleText">c = closed hi-hat</div>
       </div>
-
       <div style="clear:left;">
         <audio id="909closed">
           <!-- TODO: Change this path when porting to MIMIC -->
@@ -60,26 +57,29 @@
     &nbsp;
 
     <div>
-      <h3>Drum Sequence</h3>
-      <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
-    </div>
+      <div>
+        <h3>Drum Sequence</h3>
+        <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
+      </div>
 
-    <div>
-      <button type="button" id="btn6" style="float: left; margin-right: 5px; color: white; background-color: #4CAF50;" onclick="btn6_play()">▶</button>
-      <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
-      <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
+      <div>
+        <button type="button" id="btn6" style="float: left; margin-right: 5px; color: white; background-color: #4CAF50;" onclick="btn6_play()">▶</button>
+        <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
+        <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
+      </div>
     </div>
     &nbsp;
     &nbsp;
-
     <div>
-      <h3>Markov Generator</h3>
-      <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
-    </div>
-    <div>
-      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
-      <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
-      <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
+      <div>
+        <h3>Markov Generator</h3>
+        <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
+      </div>
+      <div>
+        <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
+        <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
+        <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
+      </div>
     </div>
     &nbsp;
     &nbsp;
