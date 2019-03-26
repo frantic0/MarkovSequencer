@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <link href="style.css" type="text/css" rel="stylesheet"/>
+  <script src="d3.min.js"></script>
   <!-- <link href='https://fonts.googleapis.com/css?family=Staatliches' rel='stylesheet' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
 </head>
@@ -12,7 +13,8 @@
   <div style="margin: 20px 20px 20px 20px;">
 
     <div style="display: inline-block">
-      <h1>Markov Sequencer</h1>
+      <!-- <h1>Markov Sequencer</h1> -->
+      <h1><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
       <h4>by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
     </div>
 
@@ -54,6 +56,7 @@
         <div class="sampleText">o = open hi-hat</div>
       </div>
     </div>
+
     &nbsp;
 
     <div>
@@ -67,9 +70,13 @@
         <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
         <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
       </div>
+
+
     </div>
     &nbsp;
     &nbsp;
+
+    </svg>
     <div>
       <div>
         <h3>Markov Generator</h3>
@@ -98,14 +105,7 @@
         <div class="console" style="color: #555555;" id="console-ln-3"> </div>
       </div>
     </div>
-    <p></p>
-
-
   </div>
-
-  <!--<div id="console"></div>-->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script> -->
-
 </body>
 <!-- TODO: Change this path when porting to MIMIC -->
 <script src="./maxiLib.js"></script>
@@ -120,8 +120,9 @@
 
   /// Global vars (hackit!)  //////////////////////////////////
 
-  var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos";
-  var sequence = "kc kc k shos";
+  // var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos";
+  var patterns = ["kc kc k scos", "kc kc k", "kc sss kccs skckos"];
+  var sequence = "kc kc k scos";
   var synth = 0;
   // var sequence = "ksc-cccckc-k-shos";
 
@@ -133,11 +134,28 @@
 
 
 
+
+
   (function setup() {
-    document.getElementById("ta_patterns").value = patterns;
-    markov.add(patterns);
+
+    // patterns.forEach(
+    //   item => {
+    //     document.getElementById("ta_patterns").value.concat(item);
+    //   }
+    //
+    // );
+
+    for (var i = 0; i < patterns.length; i++) {
+      document.getElementById("ta_patterns").value += patterns[i] + '\n';
+      markov.add(patterns[i]);
+    }
+    // document.getElementById("ta_patterns").value.concat(patterns[0]);
     document.getElementById("ta_sequence").value = sequence;
     // updateConsole(sequence);
+    d3.selectAll("span").style("color", function() {
+      return "hsl(" + Math.random() * 360 + ",100%,50%)";
+    });
+
   })();
   // setup();
 
@@ -156,6 +174,8 @@
   }
 
   function getPatternChanges() {
+
+    // Collecting changes
     patterns = document.getElementById("ta_patterns").value;
     document.getElementById("ta_patterns").innerHTML = patterns;
   }
@@ -163,6 +183,8 @@
   function btn1_loadData() {
     // patterns = document.getElementById("source").value;
     // markov = new Markov();
+
+
     markov.add(patterns);
     console.log('loadData: ' + patterns);
   }
@@ -175,29 +197,28 @@
   function btn3_delete() {
     patterns = "";
     document.getElementById("ta_patterns").value = patterns;
-    markov = new Markov();
+    // markov = new Markov();
+    markov.delete();
   }
 
   function btn4_addData() {
     // patterns += sequence + "&#013;&#010;"; // to add breakline to text content of TextArea
     // markov.add(sequence);
-    patterns += " " + sequence;
-    document.getElementById("ta_patterns").value = patterns;
+    patterns.unshift(sequence);
+
+    markov.delete();
+    document.getElementById("ta_patterns").value = "";
+
+    for (var i = 0; i < patterns.length; i++) {
+      document.getElementById("ta_patterns").value += patterns[i] + '\n';
+      markov.add(patterns[i]);
+    }
   }
 
   function btn5_generate() {
-    console.log('generate');
-    sequence = markov.generate();
-    console.log('generated');
+    document.getElementById("ta_sequence").value = sequence = markov.generate();
     updateConsole("generated: " + sequence);
   }
-
-  function playSample(e) {
-    let x = document.getElementById(e.id);
-    // alert(e.id);
-    x.play();
-  }
-
 
   function btn6_play(){
 
@@ -269,6 +290,11 @@
     initialised = true;
   }
 
+  function playSample(e) {
+    let x = document.getElementById(e.id);
+    // alert(e.id);
+    x.play();
+  }
 
   function loopPlayer() {
 
