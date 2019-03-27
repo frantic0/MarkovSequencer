@@ -3,9 +3,14 @@ body {
   color: white;
 }
 
-h1 {
+.title {
   float: left;
   margin: 0px 0px;
+}
+
+.author {
+  /* float: left; */
+  margin: 15px 0px 0px 7px;
 }
 
 /* h3 {
@@ -18,11 +23,10 @@ p {
 
 textarea {
   margin-top: -10px;
-
 }
 
 .console {
-  float: left;
+  /* float: left; */
   margin-right: 10px;
   font-size: 14px;
 }
@@ -31,17 +35,31 @@ a {
   color: hotpink;
 }
 
-.sampleButtons {
+#arrow {
+  height: 50px;
+  width: 50px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.sample {
   float: left;
-  width:22px;
+  width: 140px;
+}
+
+.sampleButton {
+  float: left;
+  width: 22px;
   margin: 0 5px 2px 0;
 }
 
-.sampleText {
+/* .sampleText {
   float: left;
   margin-right: 10px;
   font-size: 14px;
-}
+} */
 
 
 

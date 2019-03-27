@@ -3,84 +3,109 @@
 
 <head>
   <meta charset="utf-8">
-  <link href="style.css" type="text/css" rel="stylesheet"/>
+  <link href="style.css" type="text/css" rel="stylesheet" />
   <script src="d3.min.js"></script>
   <!-- <link href='https://fonts.googleapis.com/css?family=Staatliches' rel='stylesheet' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
 </head>
 
 <body>
-  <div style="margin: 20px 20px 20px 20px;">
-
-    <div style="display: inline-block">
-      <!-- <h1>Markov Sequencer</h1> -->
-      <h1><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
-      <h4>by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
+  <div style="margin: 10px 10px 10px 10px;">
+      <!-- <div style="display: inline"> -->
+    <div>
+    <!-- <h1>Markov Sequencer</h1> -->
+        <h1 class="title"><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
+        <h4 class="author">by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
     </div>
 
-    <div>
-      <h3>Markov explanation</h3>
+    <div style="width:600px;">
+      <!-- <h3>Markov explanation</h3> -->
+      <p>Markov Sequencer uses a small set of drum samples that we can live sequence and play. </p>
+      <p>It also uses a Markov chain, a probabilistic model which we can use to generate variants of drum sequences.</p>
+      <p>The Markov chain will help us to use the probabilities of "hopping" between the "words" of samples in the sequences that we like.</p>
+
     </div>
 
-    <div>
-      <div style="clear:left;">
-        <audio id="909b">
-          <!-- TODO: Change this path when porting to MIMIC -->
-          <source src="./samples/909b.wav" type="audio/wav">
-        </audio>
-        <button id="909b" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div class="sampleText">k = kick drum</div>
-      </div>
-      <div style="clear:left;">
-        <audio id="909">
+    <div >
+        <div class="sample">
+          <audio id="909b">
+            <!-- TODO: Change this path when porting to MIMIC -->
+            <source src="./samples/909b.wav" type="audio/wav">
+          </audio>
+          <button class="sampleButton" id="909b" onclick="playSample(this)">▶</button>
+          <div class="sampleText"><span>(k)</span>ick drum</div>
+        </div>
+        <div class="sample">
+          <audio id="909">
             <!-- TODO: Change this path when porting to MIMIC -->
             <source src="./samples/909.wav" type="audio/wav">
-        </audio>
-        <button id="909" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div class="sampleText">s = snare drum</div>
+          </audio>
+          <button class="sampleButton" id="909" onclick="playSample(this)">▶</button>
+          <div class="sampleText"><span>(s)</span>nare drum</div>
+        </div>
+        <div class="sample">
+          <audio id="909open">
+            <!-- TODO: Change this path when porting to MIMIC -->
+            <source src="./samples/909open.wav" type="audio/wav">
+          </audio>
+          <button class="sampleButton" id="909open" onclick="playSample(this)">▶</button>
+          <div class="sampleText"><span>(o)</span>pen hi-hat</div>
+        </div>
+        <div class="sample">
+          <audio id="909closed">
+            <!-- TODO: Change this path when porting to MIMIC -->
+            <source src="./samples/909closed.wav" type="audio/wav">
+          </audio>
+          <button id="909closed" class="sampleButton" onclick="playSample(this)">▶</button>
+          <div class="sampleText"><span>(c)</span>losed hi-hat</div>
+        </div>
       </div>
-      <div style="clear:left;">
-        <audio id="909open">
-          <!-- TODO: Change this path when porting to MIMIC -->
-          <source src="./samples/909open.wav" type="audio/wav">
-        </audio>
-        <button id="909open" class="sampleButtons" onclick="playSample(this)">▶</button>
-        <div class="sampleText">c = closed hi-hat</div>
-      </div>
-      <div style="clear:left;">
-        <audio id="909closed">
-          <!-- TODO: Change this path when porting to MIMIC -->
-          <source src="./samples/909closed.wav" type="audio/wav">
-        </audio>
-        <button id="909closed" class="sampleButtons"  onclick="playSample(this)">▶</button>
-        <div class="sampleText">o = open hi-hat</div>
-      </div>
+
     </div>
 
     &nbsp;
 
     <div>
-      <div>
-        <h3>Drum Sequence</h3>
-        <textarea id="ta_sequence" value="sdfsdf" cols="40" rows="5" onkeyup="getSeqChanges()"></textarea>
+      <div id="container_drumSequence">
+        <h3>Drum sequencer</h3>
+        <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="5" onkeyup="getSeqChanges()"></textarea>
       </div>
-
       <div>
         <button type="button" id="btn6" style="float: left; margin-right: 5px; color: white; background-color: #4CAF50;" onclick="btn6_play()">▶</button>
-        <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD DATA</button>
+        <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD SEQUENCE</button>
         <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
       </div>
-
-
     </div>
     &nbsp;
     &nbsp;
 
-    </svg>
+
+
+    <!-- <svg width="120" height="120" viewBox="0 0 120 120">
+      <defs>
+        <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+      </defs>
+
+      <polyline points="90,30 80,90 20,90" fill="none" stroke="red" stroke-width="5" marker-0nd="url(#Triangle)" />
+      <path d="M 100 100 C 150 200 100 100 L 150 200 " fill="none" stroke="blue" stroke-width="5"/>
+      <ellipse  cx="50" cy="50"
+                rx="100" ry="120"
+                stroke="red"
+                fill="transparent"
+                stroke-width="30"/>
+    </svg> -->
+    <!-- <svg viewBox='100 100 200 200'>
+      <path d='M100,-100
+               C-308,452 -174,455 -41,455'/>
+    </svg> -->
+
+
     <div>
       <div>
-        <h3>Markov Generator</h3>
-        <textarea id="ta_patterns" value="" cols="40" rows="5" onkeyup="getPatternChanges()"></textarea>
+        <h3>Markov generator</h3>
+        <textarea id="ta_patterns" value="" cols="35" rows="5" onkeyup="getPatternChanges()"></textarea>
       </div>
       <div>
         <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
@@ -116,75 +141,84 @@
 
   var markov = new Markov();
 
-  let isPlaying = false;
-
   /// Global vars (hackit!)  //////////////////////////////////
 
-  // var patterns = "kccc bcc bcc kccs bcc kccs kccs bcc kcco kccs skos kkok ccs koss kssooc bcc skos";
   var patterns = ["kc kc k scos", "kc kc k", "kc sss kccs skckos"];
   var sequence = "kc kc k scos";
-  var synth = 0;
   // var sequence = "ksc-cccckc-k-shos";
+  var synth = 0;
 
   var modelOutput = "";
 
-  let console_ln_1 = '', console_ln_2 = '', console_ln_3 = '';
+  let console_ln_1 = '',
+    console_ln_2 = '',
+    console_ln_3 = '';
+
+  let isPlaying = false;
+
+  ///////////////////////////////////////////////////
+
+  // var w = 300;
+  // var h = 300;
+  // var svg = d3.select("arrow")
+  //   .append("svg")
+  //   .attr("width", w)
+  //   .attr("height", h);
+  //
+  //
+  // svg.append("svg:defs")
+  //     .append("svg:marker")
+  //     .attr("id", "triangle")
+  //     .attr("refX", 3)
+  //     .attr("refY", 3)
+  //     .attr("markerWidth", 15)
+  //     .attr("markerHeight", 15)
+  //     .attr("orient", "auto")
+  //     .append("path")
+  //     .attr("d", "M 0 0 6 3 0 6 1 3")
+  //     .style("fill", "white");
+  //
+  // //line
+  // svg.append("line")
+  //   .attr("x1", 100)
+  //   .attr("y1", 100)
+  //   .attr("x2", 100)
+  //   .attr("y2", 200)
+  //   .attr("stroke-width", 3)
+  //   .attr("stroke", "white")
+  //   .attr("marker-end", "url(#triangle)");
+
+
 
   /// UI handlers //////////////////////////////////
 
-
-
-
-
   (function setup() {
-
-    // patterns.forEach(
-    //   item => {
-    //     document.getElementById("ta_patterns").value.concat(item);
-    //   }
-    //
-    // );
-
     for (var i = 0; i < patterns.length; i++) {
       document.getElementById("ta_patterns").value += patterns[i] + '\n';
       markov.add(patterns[i]);
     }
-    // document.getElementById("ta_patterns").value.concat(patterns[0]);
     document.getElementById("ta_sequence").value = sequence;
-    // updateConsole(sequence);
-    d3.selectAll("span").style("color", function() {
-      return "hsl(" + Math.random() * 360 + ",100%,50%)";
-    });
 
+    d3.selectAll("span").style("color", function() {
+      return "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+    });
   })();
-  // setup();
 
   /* Grab text sequence */
   function getSeqChanges() {
     sequence = document.getElementById("ta_sequence").value;
-    // document.getElementById("console").innerHTML = sequence;
-    // console.log(sequence);
-    // updateConsole(sequence);
-
-    if(!isNaN(parseInt(sequence)))
+    if (!isNaN(parseInt(sequence)))
       synth = parseInt(sequence)
 
-    updateConsole(sequence);
-
+    updateConsole('playing: ' + sequence);
   }
 
   function getPatternChanges() {
-
-    // Collecting changes
     patterns = document.getElementById("ta_patterns").value;
     document.getElementById("ta_patterns").innerHTML = patterns;
   }
 
   function btn1_loadData() {
-    // patterns = document.getElementById("source").value;
-    // markov = new Markov();
-
-
     markov.add(patterns);
     console.log('loadData: ' + patterns);
   }
@@ -220,19 +254,27 @@
     updateConsole("generated: " + sequence);
   }
 
-  function btn6_play(){
+  function btn6_play() {
 
-    if(!initialised) init();
+    if (!initialised) init();
 
-    if(!isPlaying) play(mixer);
-    else play( () => { return 0; } ); // Shut up Maxi by injecting 0 in output
+    if (!isPlaying) play(mixer);
+    else play(() => {
+      return 0;
+    }); // Shut up Maxi by injecting 0 in output
 
     isPlaying = !isPlaying;
 
     let btn6 = document.getElementById("btn6");
-    let playing = () => { btn6.innerText = "■"; btn6.style.backgroundColor = "red"; }
-    let stopped = () => { btn6.innerText = "▶"; btn6.style.backgroundColor = "#4CAF50"; }
-    (() => isPlaying ? playing() : stopped() )();
+    let playing = () => {
+      btn6.innerText = "■";
+      btn6.style.backgroundColor = "red";
+    }
+    let stopped = () => {
+        btn6.innerText = "▶";
+        btn6.style.backgroundColor = "#4CAF50";
+      }
+      (() => isPlaying ? playing() : stopped())();
 
     let consoleOut;
     isPlaying ? consoleOut = 'playing: ' + sequence : consoleOut = 'stopped';
@@ -240,7 +282,7 @@
   }
 
 
-  function updateConsole(text){
+  function updateConsole(text) {
 
     document.getElementById("console-ln-3").innerHTML = (' ' + console_ln_2).slice(1);
     document.getElementById("console-ln-2").innerHTML = (' ' + console_ln_1).slice(1);
@@ -275,7 +317,7 @@
 
   let initialised = false;
 
-  function init(){
+  function init() {
 
     maxiAudio.init();
 
@@ -371,7 +413,7 @@
         break;
       case 4:
         // Frequency Modulation
-        synOut = mySine.sinewave(440 + (myOtherSine.sinewave(1)*100));
+        synOut = mySine.sinewave(440 + (myOtherSine.sinewave(1) * 100));
         break;
       case 5:
         synOut = mySine.sinewave(myOtherSine.sinewave(30) * 440);
@@ -380,13 +422,13 @@
         synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
         break;
       default:
-       synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
+        synOut = mySine.sinewave(myOtherSine.sinewave(myLastSine.sinewave(0.1) * 30) * 440);
     }
     return synOut;
   }
 
   function mixer() {
-    return loopPlayer() + synSelector(synth) * 0.2 ;
+    return loopPlayer() + synSelector(synth) * 0.2;
   }
 
   function play(f) {
@@ -397,7 +439,6 @@
   };
 
   play(mixer);
-
 </script>
 
 </html>
