@@ -10,132 +10,125 @@
 </head>
 
 <body>
-  <div style="margin: 10px 10px 10px 10px;">
+  <div class="gridContainer">
       <!-- <div style="display: inline"> -->
-    <div>
+    <div class="containerHeader">
     <!-- <h1>Markov Sequencer</h1> -->
-        <h1 class="title"><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
-        <h4 class="author">by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
+      <h1 class="title"><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
+      <h4 class="author" >by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
     </div>
 
-    <div style="width:600px;">
+    <div class="introMarkovSequencer">
       <!-- <h3>Markov explanation</h3> -->
       <p>Markov Sequencer uses a small set of drum samples that we can live sequence and play. </p>
-      <p>It also uses a Markov chain, a probabilistic model which we can use to generate variants of drum sequences.</p>
-      <p>The Markov chain will help us to use the probabilities of "hopping" between the "words" of samples in the sequences that we like.</p>
 
-    </div>
-
-    <div >
-        <div class="sample">
-          <audio id="909b">
-            <!-- TODO: Change this path when porting to MIMIC -->
-            <source src="./samples/909b.wav" type="audio/wav">
-          </audio>
-          <button class="sampleButton" id="909b" onclick="playSample(this)">▶</button>
-          <div class="sampleText"><span>(k)</span>ick drum</div>
-        </div>
-        <div class="sample">
-          <audio id="909">
-            <!-- TODO: Change this path when porting to MIMIC -->
-            <source src="./samples/909.wav" type="audio/wav">
-          </audio>
-          <button class="sampleButton" id="909" onclick="playSample(this)">▶</button>
-          <div class="sampleText"><span>(s)</span>nare drum</div>
-        </div>
-        <div class="sample">
-          <audio id="909open">
-            <!-- TODO: Change this path when porting to MIMIC -->
-            <source src="./samples/909open.wav" type="audio/wav">
-          </audio>
-          <button class="sampleButton" id="909open" onclick="playSample(this)">▶</button>
-          <div class="sampleText"><span>(o)</span>pen hi-hat</div>
-        </div>
-        <div class="sample">
-          <audio id="909closed">
-            <!-- TODO: Change this path when porting to MIMIC -->
-            <source src="./samples/909closed.wav" type="audio/wav">
-          </audio>
-          <button id="909closed" class="sampleButton" onclick="playSample(this)">▶</button>
-          <div class="sampleText"><span>(c)</span>losed hi-hat</div>
-        </div>
+      <div class="sampleContainer" >
+          <div class="sample">
+            <audio id="909b">
+              <!-- TODO: Change this path when porting to MIMIC -->
+              <source src="./samples/909b.wav" type="audio/wav">
+              <!-- <source src="909b.wav" type="audio/wav"> -->
+            </audio>
+            <button class="sampleButton" id="b909b" onclick="playSample(this)">▶</button>
+            <div class="sampleText"><span>(k)</span>ick drum</div>
+          </div>
+          <div class="sample">
+            <audio id="909">
+              <!-- TODO: Change this path when porting to MIMIC -->
+              <source src="./samples/909.wav" type="audio/wav">
+              <source src="909.wav" type="audio/wav">
+            </audio>
+            <button class="sampleButton" id="b909" onclick="playSample(this)">▶</button>
+            <div class="sampleText"><span>(s)</span>nare drum</div>
+          </div>
+          <div class="sample">
+            <audio id="909open">
+              <!-- TODO: Change this path when porting to MIMIC -->
+              <source src="./samples/909open.wav" type="audio/wav">
+              <!-- <source src="909open.wav" type="audio/wav"> -->
+            </audio>
+            <button class="sampleButton" id="b909open" onclick="playSample(this)">▶</button>
+            <div class="sampleText"><span>(o)</span>pen hi-hat</div>
+          </div>
+          <div class="sample">
+            <audio id="909closed">
+              <!-- TODO: Change this path when porting to MIMIC -->
+              <source src="./samples/909closed.wav" type="audio/wav">
+              <!-- <source src="909closed.wav" type="audio/wav"> -->
+            </audio>
+            <button id="b909closed" class="sampleButton" onclick="playSample(this)">▶</button>
+            <div class="sampleText"><span>(c)</span>losed hi-hat</div>
+          </div>
       </div>
-
     </div>
 
-    &nbsp;
+    <div class="introMarkovChain">
+      <p>Under the hood, Markov Sequencer uses a Markov chain, a probabilistic model which we can use to generate variants of drum sequences.</p>
+      <p>The Markov chain will help us to use the probabilities of "hopping" between the "words" of samples in the sequences that we like.</p>
+    </div>
 
-    <div>
-      <div id="container_drumSequence">
-        <h3>Drum sequencer</h3>
-        <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="5" onkeyup="getSeqChanges()"></textarea>
+    <div class="drumSequenceContainer">
+      <div>
+        <div>
+          <h3>Drum sequencer
+            <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+          </h3>
+        </div>
+        <div style="margin-top: -10px">
+          <button type="button" id="btn6" onclick="btn6_play()">▶</button>
+          <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="3" onkeyup="getSeqChanges()"></textarea>
+        </div>
       </div>
       <div>
-        <button type="button" id="btn6" style="float: left; margin-right: 5px; color: white; background-color: #4CAF50;" onclick="btn6_play()">▶</button>
         <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD SEQUENCE</button>
         <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
       </div>
     </div>
-    &nbsp;
-    &nbsp;
 
-
-
-    <!-- <svg width="120" height="120" viewBox="0 0 120 120">
-      <defs>
-        <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="4" markerHeight="4" orient="auto">
-          <path d="M 0 0 L 10 5 L 0 10 z" />
-        </marker>
-      </defs>
-
-      <polyline points="90,30 80,90 20,90" fill="none" stroke="red" stroke-width="5" marker-0nd="url(#Triangle)" />
-      <path d="M 100 100 C 150 200 100 100 L 150 200 " fill="none" stroke="blue" stroke-width="5"/>
-      <ellipse  cx="50" cy="50"
-                rx="100" ry="120"
-                stroke="red"
-                fill="transparent"
-                stroke-width="30"/>
-    </svg> -->
-    <!-- <svg viewBox='100 100 200 200'>
-      <path d='M100,-100
-               C-308,452 -174,455 -41,455'/>
-    </svg> -->
-
-
-    <div>
+    <div class="markovGeneratorContainer">
       <div>
-        <h3>Markov generator</h3>
+        <div>
+          <h3>Markov generator
+            <div class="tooltip">
+              <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+              <span class="tooltiptext">Tooltip text</span>
+            </div>
+          </h3>
+        </div>
+      </div>
+        <div style="margin-top: -10px">
         <textarea id="ta_patterns" value="" cols="35" rows="5" onkeyup="getPatternChanges()"></textarea>
       </div>
-      <div>
-        <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
-        <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
-        <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button>
-      </div>
+      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
+      <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
+      <!-- <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button> -->
     </div>
-    &nbsp;
-    &nbsp;
 
-    <div>
-      <div>
-        <div class="console" style="color: #CCCCCC;">&gt; </div>
-        <div class="console" style="color: #CCCCCC;" id="console-ln-1"></div>
-      </div>
-      <div style="clear:left;">
-        <div class="console" style="color: #888888;">&gt; </div>
-        <div class="console" style="color: #888888;" id="console-ln-2"> </div>
-      </div>
-      <div style="clear:left;">
-        <div class="console" style="color: #555555;">&gt; </div>
-        <div class="console" style="color: #555555;" id="console-ln-3"> </div>
+    <div class="consoleContainer">
+      <h3>Console</h3>
+      <div style="margin: -10px 0 0 0">
+        <div>
+          <div class="console" style="color: #CCCCCC;">&gt; </div>
+          <div class="console" style="color: #CCCCCC;" id="console-ln-1"></div>
+        </div>
+        <div style="clear:left;">
+          <div class="console" style="color: #888888;">&gt; </div>
+          <div class="console" style="color: #888888;" id="console-ln-2"> </div>
+        </div>
+        <div style="clear:left;">
+          <div class="console" style="color: #555555;">&gt; </div>
+          <div class="console" style="color: #555555;" id="console-ln-3"> </div>
+        </div>
       </div>
     </div>
   </div>
 </body>
 <!-- TODO: Change this path when porting to MIMIC -->
 <script src="./maxiLib.js"></script>
+<!-- <script src = "https://dev.codecircle.gold.ac.uk/libs/maxiLib.js"></script> -->
 <!-- TODO: Change this path when porting to MIMIC -->
 <script src="./markov.js"></script>
+<!-- <script src="markov.js"></script> -->
 <script>
   /// Markov Model //////////////////////////////////
 
@@ -156,7 +149,20 @@
 
   let isPlaying = false;
 
-  ///////////////////////////////////////////////////
+  /// Loading //////////////////////////////////////////////
+
+  (function setup() {
+    for (var i = 0; i < patterns.length; i++) {
+      document.getElementById("ta_patterns").value += patterns[i] + '\n';
+      markov.add(patterns[i]);
+    }
+    document.getElementById("ta_sequence").value = sequence;
+
+    d3.selectAll("span").style("color", function() {
+      return "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+    });
+  })();
+
 
   // var w = 300;
   // var h = 300;
@@ -188,21 +194,7 @@
   //   .attr("stroke", "white")
   //   .attr("marker-end", "url(#triangle)");
 
-
-
   /// UI handlers //////////////////////////////////
-
-  (function setup() {
-    for (var i = 0; i < patterns.length; i++) {
-      document.getElementById("ta_patterns").value += patterns[i] + '\n';
-      markov.add(patterns[i]);
-    }
-    document.getElementById("ta_sequence").value = sequence;
-
-    d3.selectAll("span").style("color", function() {
-      return "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-    });
-  })();
 
   /* Grab text sequence */
   function getSeqChanges() {
@@ -333,7 +325,8 @@
   }
 
   function playSample(e) {
-    let x = document.getElementById(e.id);
+
+    let x = document.getElementById(e.id.toString().slice(1));
     // alert(e.id);
     x.play();
   }
