@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link href="style.css" type="text/css" rel="stylesheet" />
   <script src="d3.min.js"></script>
+  <!-- <script src="audioEngine.js"></script> -->
   <!-- <link href='https://fonts.googleapis.com/css?family=Staatliches' rel='stylesheet' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
 </head>
@@ -15,7 +16,7 @@
     <div class="containerHeader">
     <!-- <h1>Markov Sequencer</h1> -->
       <h1 class="title"><span>M</span><span>a</span><span>r</span><span>k</span><span>o</span><span>v</span> Sequencer</h1>
-      <h4 class="author" >by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4>
+      <!-- <h4 class="author">by <a href="https://www.frantic0.com" target="_blank">franticØ</a></h4> -->
     </div>
 
     <div class="introMarkovSequencer">
@@ -68,71 +69,56 @@
     </div>
 
     <div class="mainUIContainer">
-
       <div class="drumSequenceContainer">
-        <div>
-          <div>
-            <h3>Drum sequencer
-              <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
-            </h3>
+        <div class="tooltipHelpHeaderContainer">
+          <h3 style="float: left; margin: 0 0 10px 0">Drum sequencer</h3>
+          <div class="tooltip" style="float: left; margin: 0 0 0 5px ">
+            <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+            <p class="tooltiptext">In Drum Sequencer you can play, stop, or edit a drum sequence, by combining the 4 letters assigned to each sample—<span>(k)</span>, <span>(s)</span>, <span>(o)</span>, <span>(c)</span>—with spaces ' ' or rests. You can also add your favourite sequences to the Markov generator usign <span>ADD SEQUENCE</span>, or generating new sequences using <span>GENERATE</span>!</p>
           </div>
-          <div style="margin-top: -10px">
-            <button type="button" id="btn6" onclick="btn6_play()">▶</button>
-            <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="3" onkeyup="getSeqChanges()"></textarea>
+        </div>
+        <div >
+          <div>
+            <textarea id="ta_sequence"  value="" cols="35" rows="3" onkeyup="getSeqChanges()"></textarea>
+            <button type="button" style="float: left;" id="btn6" onclick="btn6_play()">▶</button>
           </div>
         </div>
       </div>
 
       <div class="addGenerateButtonsContainer">
         <div class="curvedArrows" >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 100 160" >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -30 100 100" >
             <defs>
               <marker id='head' orient="auto"
                       markerWidth='2' markerHeight='4'
-                      refX='0.1' refY='3'>
+                      refX='0.2' refY='3'>
                 <path d='M0,0 V4 L2,2 Z' fill="red"/>
               </marker>
-              <marker id='bluehead' orient="auto"
+              <!-- <marker id='bluehead' orient="auto"
                       markerWidth='2' markerHeight='4'
-                      refX='0.1' refY='3'>
+                      refX='0.1' refY='50'>
                 <path d='M0,0 V4 L2,2 Z'
                       fill="blue"
-                      transform="rotate(-10 50 100) translate(0 45.5)"
+                      transform="rotate(-10 50 100) translate(0 10)"
                       />
-              </marker>
+              </marker> -->
             </defs>
             <path
               id='arrow-line'
               marker-end='url(#head)'
               stroke-width='15'
               fill='none' stroke='red'
-              d='M0,0 C0,0 45,-45 90,0'
+              d='M0 0 C0 0 40 -40 95 0'
               />
             <path
-              id='arrow-line'
+              id='blue-arrow-line'
               marker-end='url(#bluehead)'
               stroke-width='15'
               fill='none' stroke='blue'
-              d='M100 0 C0 45 -45 -45 10 0'
-              transform="translate(0 45.5)"
+              d='M100 0 C0 55 -65 -65 10 0'
+              transform="translate(0 40)"
               />
           </svg>
-          <!-- <svg id="curvedArrow2" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 100 160" >
-          <defs>
-            <marker id='bluehead' orient="auto"
-                    markerWidth='2' markerHeight='4'
-                    refX='0.1' refY='3'>
-              <path d='M0,0 V4 L2,2 Z' fill="blue"  />
-            </marker>
-          </defs>
-          <path
-            id='arrow-line'
-            marker-end='url(#bluehead)'
-            stroke-width='15'
-            fill='none' stroke='blue'
-            d='M90 0 C0 45 -45 -45 0 0'
-            />
-          </svg> -->
         </div>
         <div class="addGenerateButtons">
           <button class="addGenerateButton" type="button" id="btn4" style="margin-right: 5px" onclick="btn4_addData()">ADD SEQUENCE</button>
@@ -141,21 +127,20 @@
       </div>
 
       <div class="markovGeneratorContainer">
-      <div>
-          <h3>Markov generator
-            <div class="tooltip">
-                <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
-              <span class="tooltiptext">Tooltip text</span>
-            </div>
-          </h3>
+        <div class="tooltipHelpHeaderContainer">
+          <h3 style="float: left; margin: 0 0 10px 0">Markov generator</h3>
+          <div style="float: left; margin: 0 0 0 5px " class="tooltip">
+            <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+            <span class="tooltiptext">Tooltip text</span>
+          </div>
+        </div>
+        <div style="margin-top: -10px">
+          <textarea id="ta_patterns" value="" cols="35" rows="5" onkeyup="getPatternChanges()"></textarea>
+        </div>
+        <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
+        <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
+        <!-- <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button> -->
       </div>
-      <div style="margin-top: -10px">
-        <textarea id="ta_patterns" value="" cols="35" rows="5" onkeyup="getPatternChanges()"></textarea>
-      </div>
-      <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
-      <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
-      <!-- <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button> -->
-    </div>
 
     </div>
 
@@ -218,38 +203,8 @@
     d3.selectAll("span").style("color", function() {
       return "hsl(" + Math.random() * 360 + ", 100%, 50%)";
     });
+
   })();
-
-
-  // var w = 300;
-  // var h = 300;
-  // var svg = d3.select("arrow")
-  //   .append("svg")
-  //   .attr("width", w)
-  //   .attr("height", h);
-  //
-  //
-  // svg.append("svg:defs")
-  //     .append("svg:marker")
-  //     .attr("id", "triangle")
-  //     .attr("refX", 3)
-  //     .attr("refY", 3)
-  //     .attr("markerWidth", 15)
-  //     .attr("markerHeight", 15)
-  //     .attr("orient", "auto")
-  //     .append("path")
-  //     .attr("d", "M 0 0 6 3 0 6 1 3")
-  //     .style("fill", "white");
-  //
-  // //line
-  // svg.append("line")
-  //   .attr("x1", 100)
-  //   .attr("y1", 100)
-  //   .attr("x2", 100)
-  //   .attr("y2", 200)
-  //   .attr("stroke-width", 3)
-  //   .attr("stroke", "white")
-  //   .attr("marker-end", "url(#triangle)");
 
   /// UI handlers //////////////////////////////////
 
@@ -268,8 +223,15 @@
   }
 
   function btn1_loadData() {
-    markov.add(patterns);
-    console.log('loadData: ' + patterns);
+    if(patterns !== undefined && patterns.length >= 1) {
+      for (var i = 0; i < patterns.length; i++) {
+        document.getElementById("ta_patterns").value += patterns[i] + '\n';
+        markov.add(patterns[i]);
+      }
+      console.log('loadData: ' + patterns);
+    }
+    else
+      console.log('no Data in Markov generator: ');
   }
 
   function btn2_train() {
@@ -437,7 +399,6 @@
 
     return synOut;
   }
-
 
   function synSelector(n) {
 

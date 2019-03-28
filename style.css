@@ -39,12 +39,11 @@ body {
 .mainUIContainer {
   display:flex;
   flex-wrap: wrap;
-  /* height:100vh; */
-  align-items:center;
+  margin: 20px 0px 0px 10px;
 }
 
 .drumSequenceContainer {
-  margin: 0px 0px 0px 10px;
+  /* margin: 0px 0px 0px 0px; */
 }
 
 
@@ -60,17 +59,23 @@ body {
 
 
 .addGenerateButtonsContainer {
-  margin: 40px 0px 0px 10px;
+  margin: -25px 0px 0px 10px;
   width: 130px;
+  height: 50px;
+}
+
+.tooltipHelpHeaderContainer {
+
+
 }
 
 .curvedArrows {
   z-index: -2;
   position: relative;
   left: 0;
-  top: 0;
+  top: 20px;
   width: 130px;
-  height: 130px;
+  height: 100px;
 }
 
 
@@ -78,7 +83,7 @@ body {
   z-index:10;
   position: relative;
   left: 10px;
-  top: -65px;
+  top: -50px;
 }
 
 .addGenerateButton {
@@ -131,7 +136,7 @@ button {
 }
 
 #btn6 {
-  float: left;
+  /* float: left; */
   height: 55px;
   width: 50px;
   margin-right: 5px;
@@ -154,11 +159,11 @@ button {
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
+  background-color: #555;
   color: #fff;
-  text-align: center;
+  text-align: left;
   border-radius: 6px;
-  padding: 0px 0;
+  padding: 10px 10px;
 
 
   /* Position the tooltip */
