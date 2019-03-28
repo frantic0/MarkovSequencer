@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8">
   <link href="style.css" type="text/css" rel="stylesheet" />
+
+  <!-- TODO: Change this path when porting to MIMIC -->
   <script src="d3.min.js"></script>
-  <!-- <script src="audioEngine.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
   <!-- <link href='https://fonts.googleapis.com/css?family=Staatliches' rel='stylesheet' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
 </head>
@@ -74,7 +76,7 @@
           <h3 style="float: left; margin: 0 0 10px 0">Drum sequencer</h3>
           <div class="tooltip" style="float: left; margin: 0 0 0 5px ">
             <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
-            <p class="tooltiptext">In Drum Sequencer you can play, stop, or edit a drum sequence, by combining the 4 letters assigned to each sample—<span>(k)</span>, <span>(s)</span>, <span>(o)</span>, <span>(c)</span>—with spaces ' ' or rests. You can also add your favourite sequences to the Markov generator usign <span>ADD SEQUENCE</span>, or generating new sequences using <span>GENERATE</span>!</p>
+            <p class="tooltiptext">In Drum Sequencer you can play, stop, or edit a drum sequence, by combining the 4 letters assigned to each sample—<span>(k)</span>, <span>(s)</span>, <span>(o)</span>, <span>(c)</span>—with spaces '  ' or rests. You can also add your favourite sequences to the Markov generator usign <span>ADD SEQUENCE</span>, or generating new sequences using <span>GENERATE</span>!</p>
           </div>
         </div>
         <div >
@@ -131,7 +133,7 @@
           <h3 style="float: left; margin: 0 0 10px 0">Markov generator</h3>
           <div style="float: left; margin: 0 0 0 5px " class="tooltip">
             <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
-            <span class="tooltiptext">Tooltip text</span>
+            <p class="tooltiptext">Markov generator shows the drum sequences with which the Markov chains are built. Here we can edit and add new drum sequences directly and <span>LOAD,</span> them or <span>DELETE</span> the Markov chains model.</p>
           </div>
         </div>
         <div style="margin-top: -10px">
@@ -218,15 +220,18 @@
   }
 
   function getPatternChanges() {
-    patterns = document.getElementById("ta_patterns").value;
-    document.getElementById("ta_patterns").innerHTML = patterns;
+    // patterns = document.getElementById("ta_patterns").value;
+    // document.getElementById("ta_patterns").innerHTML = patterns;
   }
 
   function btn1_loadData() {
-    if(patterns !== undefined && patterns.length >= 1) {
-      for (var i = 0; i < patterns.length; i++) {
-        document.getElementById("ta_patterns").value += patterns[i] + '\n';
-        markov.add(patterns[i]);
+
+    let ta_patterns = document.getElementById("ta_patterns").value.split('\n');
+
+    if(ta_patterns !== undefined && ta_patterns.length >= 1) {
+      for (var i = 0; i < ta_patterns.length; i++) {
+        patterns.push = ta_patterns[i];
+        markov.add(ta_patterns[i]);
       }
       console.log('loadData: ' + patterns);
     }
