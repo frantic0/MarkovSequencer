@@ -32,43 +32,73 @@ body {
 
 
 .sampleContainer {
+  margin: 0px 0px 0px 10px;
 
+}
+
+.mainUIContainer {
+  display:flex;
+  flex-wrap: wrap;
+  /* height:100vh; */
+  align-items:center;
 }
 
 .drumSequenceContainer {
-
+  margin: 0px 0px 0px 10px;
 }
 
+
+
 .markovGeneratorContainer {
-
-  /* grid-column-start: 2/2;
-  grid-column-end: 2/2; */
-
-  grid-area: gen;
+  margin: 0px 0px 0px 10px;
 
 }
 
 .consoleContainer {
-  grid-area: console;
+  margin: 0px 0px 0px 10px;
 }
 
 
+.addGenerateButtonsContainer {
+  margin: 40px 0px 0px 10px;
+  width: 130px;
+}
+
+.curvedArrows {
+  z-index: -2;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 130px;
+  height: 130px;
+}
+
+
+.addGenerateButtons {
+  z-index:10;
+  position: relative;
+  left: 10px;
+  top: -65px;
+}
+
+.addGenerateButton {
+  width: 105px;
+  margin: 10px 0px 0px 0px;
+  cursor: pointer;
+}
 
 .sample {
   float: left;
   width: 140px;
 }
 
+
+
 .sampleButton {
   float: left;
   width: 22px;
   margin: 0 5px 2px 0;
 }
-
-
-/* h3 {
-  margin: 15px;
-} */
 
 p {
   color: white;
@@ -120,9 +150,6 @@ button {
   /* border-bottom: 1px dotted black; */
 }
 
-.tooltip {
-
-}
 
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -131,7 +158,8 @@ button {
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 0px 0;
+
 
   /* Position the tooltip */
   position: absolute;

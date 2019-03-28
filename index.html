@@ -20,7 +20,7 @@
 
     <div class="introMarkovSequencer">
       <!-- <h3>Markov explanation</h3> -->
-      <p>Markov Sequencer uses a small set of drum samples that we can live sequence and play. </p>
+      <p>Markov Sequencer uses a small set of drum samples that we can play, by sequencing a few letters:</p>
 
       <div class="sampleContainer" >
           <div class="sample">
@@ -64,45 +64,101 @@
 
     <div class="introMarkovChain">
       <p>Under the hood, Markov Sequencer uses a Markov chain, a probabilistic model which we can use to generate variants of drum sequences.</p>
-      <p>The Markov chain will help us to use the probabilities of "hopping" between the "words" of samples in the sequences that we like.</p>
+      <p>The Markov chain will help us to use the probabilities of "hopping" between a set of states: the "words" of samples in the sequences that we added.</p>
     </div>
 
-    <div class="drumSequenceContainer">
-      <div>
-        <div>
-          <h3>Drum sequencer
-            <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
-          </h3>
-        </div>
-        <div style="margin-top: -10px">
-          <button type="button" id="btn6" onclick="btn6_play()">▶</button>
-          <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="3" onkeyup="getSeqChanges()"></textarea>
-        </div>
-      </div>
-      <div>
-        <button type="button" id="btn4" style="float: left; margin-right: 5px" onclick="btn4_addData()">ADD SEQUENCE</button>
-        <button type="button" id="btn5" style="float: left; margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
-      </div>
-    </div>
+    <div class="mainUIContainer">
 
-    <div class="markovGeneratorContainer">
-      <div>
+      <div class="drumSequenceContainer">
         <div>
+          <div>
+            <h3>Drum sequencer
+              <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+            </h3>
+          </div>
+          <div style="margin-top: -10px">
+            <button type="button" id="btn6" onclick="btn6_play()">▶</button>
+            <textarea id="ta_sequence" value="sdfsdf" cols="35" rows="3" onkeyup="getSeqChanges()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="addGenerateButtonsContainer">
+        <div class="curvedArrows" >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 100 160" >
+            <defs>
+              <marker id='head' orient="auto"
+                      markerWidth='2' markerHeight='4'
+                      refX='0.1' refY='3'>
+                <path d='M0,0 V4 L2,2 Z' fill="red"/>
+              </marker>
+              <marker id='bluehead' orient="auto"
+                      markerWidth='2' markerHeight='4'
+                      refX='0.1' refY='3'>
+                <path d='M0,0 V4 L2,2 Z'
+                      fill="blue"
+                      transform="rotate(-10 50 100) translate(0 45.5)"
+                      />
+              </marker>
+            </defs>
+            <path
+              id='arrow-line'
+              marker-end='url(#head)'
+              stroke-width='15'
+              fill='none' stroke='red'
+              d='M0,0 C0,0 45,-45 90,0'
+              />
+            <path
+              id='arrow-line'
+              marker-end='url(#bluehead)'
+              stroke-width='15'
+              fill='none' stroke='blue'
+              d='M100 0 C0 45 -45 -45 10 0'
+              transform="translate(0 45.5)"
+              />
+          </svg>
+          <!-- <svg id="curvedArrow2" xmlns="http://www.w3.org/2000/svg" viewBox="0 -55 100 160" >
+          <defs>
+            <marker id='bluehead' orient="auto"
+                    markerWidth='2' markerHeight='4'
+                    refX='0.1' refY='3'>
+              <path d='M0,0 V4 L2,2 Z' fill="blue"  />
+            </marker>
+          </defs>
+          <path
+            id='arrow-line'
+            marker-end='url(#bluehead)'
+            stroke-width='15'
+            fill='none' stroke='blue'
+            d='M90 0 C0 45 -45 -45 0 0'
+            />
+          </svg> -->
+        </div>
+        <div class="addGenerateButtons">
+          <button class="addGenerateButton" type="button" id="btn4" style="margin-right: 5px" onclick="btn4_addData()">ADD SEQUENCE</button>
+          <button class="addGenerateButton" type="button" id="btn5" style="margin-right: 5px" onclick="btn5_generate()">GENERATE</button>
+        </div>
+      </div>
+
+      <div class="markovGeneratorContainer">
+      <div>
           <h3>Markov generator
             <div class="tooltip">
-              <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
+                <img class="helpIcon" src="helpIcon.png" onerror="this.src='your.png'"/>
               <span class="tooltiptext">Tooltip text</span>
             </div>
           </h3>
-        </div>
       </div>
-        <div style="margin-top: -10px">
+      <div style="margin-top: -10px">
         <textarea id="ta_patterns" value="" cols="35" rows="5" onkeyup="getPatternChanges()"></textarea>
       </div>
       <button type="button" id="btn1" onclick="btn1_loadData()">LOAD DATA</button>
       <button type="button" id="btn3" onclick="btn3_delete()">DELETE</button>
       <!-- <button type="button" id="btn2" onclick="btn2_train()">GRAPH</button> -->
     </div>
+
+    </div>
+
 
     <div class="consoleContainer">
       <h3>Console</h3>
@@ -121,6 +177,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </body>
 <!-- TODO: Change this path when porting to MIMIC -->
